@@ -8,6 +8,7 @@ Built with [Ansible](http://ansible.com). Made by [MIZZEN](http://madebymizzen.c
 
 Installation
 ---
+Clone this repo and get into the project's folder. 
 ```
 git clone https://github.com/bgrrtt/craft-ops.git project_name
 ```
@@ -22,25 +23,19 @@ brew cask install virtualbox vagrant
 ```
 
 #### Optional (sorta)
-These vagrant plugins come in *very* handy, so handy that the rest of the instructions assume you have them installed.
+These vagrant plugins come in *very* handy, *so* handy that the rest of the instructions assume you have them installed.
 - [vagrant-cachier](https://github.com/fgrehm/vagrant-cachier)
 - [vagrant-hostsupdater](https://github.com/cogitatio/vagrant-hostsupdater)
 - [vagrant-vbguest](https://github.com/dotless-de/vagrant-vbguest)
 
 
-### Configuration
+### Virtual Configuration
 In the `Vagrantfile`, change the following variables to fit your development environment needs:
-- PROJECT_NAME (dev site will be available at `http://project.dev` by default)
-- LOCAL_IP (192.168.0.0 - 192.168.255.255)
+- PROJECT_NAME (project) (dev site will be available at `http://project.dev` by default)
+- LOCAL_IP (192.168.0.0 - 192.168.255.255) (dev site will be available at `192.168.0.1` by default)
 
 ### Initialization
+This command sets up the virtual dev environment and triggers the `ops/vagrant.yml` playbook for configuration.
 ```
 vagrant up
 ```
-sets up the virtual environment and triggers the `ops/vagrant.yml` playbook for configuration.
-
-### Provision
-```
-vagrant provision
-```
-triggers the `ops/vagrant.yml` playbook.
