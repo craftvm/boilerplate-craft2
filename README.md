@@ -8,7 +8,7 @@ Built with [Ansible](http://ansible.com). Made by [MIZZEN](http://madebymizzen.c
 
 Installation
 ---
-Clone this repo and get into the project's folder. 
+Clone this repo and get into the project's folder.
 ```
 git clone https://github.com/bgrrtt/craft-ops.git project_name
 ```
@@ -39,3 +39,6 @@ This command sets up the virtual dev environment and triggers the `ops/vagrant.y
 ```
 vagrant up
 ```
+
+Visit the [wiki](https://github.com/bgrrtt/craft-ops/wiki) for utilization instruction! 
+------------
