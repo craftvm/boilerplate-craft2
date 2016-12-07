@@ -1,11 +1,10 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-VAGRANTFILE_API_VERSION = "2"
 PROJECT_NAME = "project"
 LOCAL_IP = "192.168.0.1"
 
-Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+Vagrant.configure("2") do |config|
   config.vm.box = "ubuntu/trusty64"
   config.ssh.insert_key = false
 
