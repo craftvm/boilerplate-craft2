@@ -2,15 +2,15 @@
 # vi: set ft=ruby :
 
 PROJECT_NAME = "project"
-LOCAL_IP = "192.168.0.1"
+LOCAL_IP = "192.168.20.10"
 
 Vagrant.configure("2") do |config|
   config.vm.box = "ubuntu/trusty64"
   config.ssh.insert_key = false
 
-  # Provider Config
+  # Virtualbox Configuartion
   config.vm.provider :virtualbox do |v|
-    v.name = PROJECT_NAME
+    v.name = PROJECT_NAME + ".vm"
     v.memory = 1024
     v.cpus = 2
     v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
@@ -26,7 +26,7 @@ Vagrant.configure("2") do |config|
   config.vm.synced_folder ".", "/site"
 
   # Set name of the VM
-  config.vm.define PROJECT_NAME do |somethinganythingplease|
+  config.vm.define PROJECT_NAME do |something|
   end
 
   # Provison with Ansible
@@ -35,7 +35,8 @@ Vagrant.configure("2") do |config|
     ansible.provisioning_path = "/ops"
     ansible.inventory_path = "/ops/inventory/hosts"
     ansible.limit = "all"
-    ansible.verbose = false
+    ansible.verbose = true
+    ansible.version = "latest"
   end
 
 end
