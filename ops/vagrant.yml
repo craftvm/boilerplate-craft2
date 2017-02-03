@@ -3,9 +3,7 @@
   become: yes
   gather_facts: yes
   roles:
-    - debug
     - pkgs
-    - users
     - swapfile
     - firewall
     - mysql
