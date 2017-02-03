@@ -1,0 +1,32 @@
+---
+# tasks file for pkgs
+- name: update apt
+  apt: update_cache=yes cache_valid_time=3600
+
+- name: download ppas
+  apt_repository:
+    repo: "{{ item }}"
+    state: present
+  with_items: "{{ apt_ppas }}"
+
+- name: uninstall chef, puppet, and others...
+  apt:
+    name: "{{ item }}"
+    state: absent
+    autoremove: yes
+  with_items: "{{ remove_pkgs }}"
+
+- name: install base packages
+  apt:
+    name: "{{ item }}"
+    state: latest
+  with_items: "{{ base_pkgs }}"
+
+- name: install pip
+  apt: name=python-pip update_cache=yes cache_valid_time=3600
+  become: true
+
+- name: install boto
+  pip: name="{{ item }}"
+  with_items: "{{ pip_pkgs }}"
+  become: true

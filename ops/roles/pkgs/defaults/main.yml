@@ -1,0 +1,31 @@
+---
+# defaults file for pkgs
+base_pkgs:
+  - git
+  - build-essential
+  - jpegoptim
+  - nginx
+  - ntp
+  - optipng
+  - python-apt
+  - python-pycurl
+  - python-dev
+  - libmysqlclient-dev
+  - tree
+  - unattended-upgrades
+  - whois
+  - zsh
+
+pip_pkgs:
+  - boto
+  - cheat
+  - MySQL-python
+  # - cryptography
+
+apt_ppas:
+  - "ppa:nginx/stable"
+  - "ppa:ondrej/php"
+
+remove_pkgs:
+  - chef
+  - puppet
