@@ -1,47 +1,81 @@
-<!-- ![Craft-Ops Logo](https://raw.githubusercontent.com/bgrrtt/craft-ops/master/logo.jpg "DevOps Environment for Craft CMS and AWS") -->
+<!-- ![CraftOps Logo](https://raw.githubusercontent.com/bgrrtt/craft-ops/master/logo.jpg "DevOps Environment for Craft CMS and AWS") -->
 CraftOps
 ========
-**Production DevOps Environment for [Craft CMS](http://craftcms.com) and [AWS](http://aws.amazon.com).**
+**DevOps Box for [Craft CMS](https://craftcms.com) ~~and [AWS](http://aws.amazon.com)~~.**
 
-Built with [Ansible](http://ansible.com). Made by [Mizzen](http://madebymizzen.com).
+Built with [Ansible](https://ansible.com). Made by [Mizzen](http://madebymizzen.com).
 
 Overview
 --------
+CraftOps creates an Ubuntu 14.04 virtual computer on your local machine using Virtualbox. After you start the machine with Vagrant (in the terminal), an Ansible playbook will run which provisions the new virtual computer into a CraftOps box.
+
+Once the CraftOps box is running, several commands become available from within the machine.
+
+Visit the [wiki](https://github.com/bgrrtt/craftOps/wiki) for more information!
 
 Installation
 ------------
-The host computer, tested with macOS, must have [Vagrant](vagrant_link) and [VirtualBox](virtualbox_link) installed. We also need the [vagrant-cachier](https://github.com/fgrehm/vagrant-cachier), [vagrant-hostsupdater](https://github.com/cogitatio/vagrant-hostsupdater), and [vagrant-vbguest](https://github.com/dotless-de/vagrant-vbguest) plugins installed to ensure eveything will work properly. Then just clone the repo, quickly configure a little networking stuff, and you have lift off!
+Just follow these steps!
+  1. The host computer must have [Vagrant](https://www.vagrantup.com) and [VirtualBox](https://www.virtualbox.org/wiki/Downloads) installed. (fyi, [brew](http://brew.sh))
+```
+    brew cask install virtualbox vagrant
+  ```
 
-$`brew cask install virtualbox vagrant`
+  2. Install [vagrant-hostsupdater](https://github.com/cogitatio/vagrant-hostsupdater)  and [vagrant-vbguest](https://github.com/dotless-de/vagrant-vbguest), which help with local networking and concurrent development.
+```
+vagrant plugin install vagrant-hostsupdater vagrant-vbguest
+```
 
-$`vagrant plugin install vagrant-cachier vagrant-hostsupdater vagrant-vbguest`
+  3. Clone this repo!
+```
+git clone https://github.com/bgrrtt/craftOps.git PROJECT_NAME
+```
 
-$`git clone https://github.com/bgrrtt/craft-ops.git YOUR_PROJECT_NAME`
+  4. Get into your project's folder and open it with a text editor like [atom](https://atom.io/).
+```
+cd PROJECT_NAME && atom .
+```
 
-VirtualBox Configuration
-------------------------
-$`cd YOUR_PROJECT_NAME && atom .` ([atom text editor](https://atom.io/))
+  5. In the `Vagrantfile` set:
+      - `DOMAIN_NAME` to the local development domain name.
+      - `LOCAL_IP` to a nonconflicting address between 192.168.20.10 and 192.168.255.255.
+  <br><br>
+  6. [Download Craft CMS](https://buildwithcraft.com/latest.zip?accept_license=yes), unzip, and move `craft/app` into `PROJECT_NAME/craft`.
 
-In the Vagrantfile, change the variables on lines 4 and 5:
-- PROJECT_NAME to a local develoment domain name. Your project will be available at http://PROJECT_NAME.dev.
-- LOCAL_IP to any nonconflicting address between 192.168.10.10 - 192.168.255.255
+  7. [Create a new private repository](https://github.com/new). Or go public if just deving.
 
-Start CraftOps
---------------
-$`vagrant up && vagrant ssh` into your CraftOps development enviornment.
+  8. Delete the current `PROJECT_NAME/.git` folder and start your own with `git init`. Next, add your new repository's url as the local repository's remote origin.
+```
+rm -rf .git && git init
+```
+```
+git remote add origin git@github.com:USERNAME/YOUR-NEW-REPOSITORY.git
+```
 
-CraftOps Configuration
-----------------------
+  9. Start the new CraftOps box on your local machine with `vagrant up` and wait.
+```
+vagrant up
+```
 
-CraftOps Quick Commands
------------------------
-Once you have everything configured these commands are helpful to have on hand.
-- `ops provision`
-- `ops aws`
-- `ops deploy`
-- `ops dbsync`
+  10. Use `vagrant ssh` to enter the machine after installation completes.
+```
+vagrant ssh
+```
 
-[Visit the wiki for more information!](https://github.com/bgrrtt/craft-ops/wiki)
-================================================================================
+Congratulation! A fresh CraftOps site should be available at [http://project.dev](http://project.dev)!
 
-Thanks to [@howardroark](https://github.com/howardroark), [@jlund](https://github.com/jlund), [@geerlingguy](https://github.com/geerlingguy), [@khalwat](https://github.com/khalwat), and [@pixelandtonic](https://github.com/pixelandtonic) for their work and influence.
+---
+Developer’s Note
+================
+
+CraftOps is a self contained and tooled development environment, sort of equivalent to Vagrant Homestead, which also builds and maintains cloud infrastructure, specifically for Craft CMS.
+
+Please [add ideas here](https://github.com/bgrrtt/craftOps/issues) marked [as such](https://github.com/bgrrtt/craftOps/labels/idea).
+
+Message me on the [Craft CMS Slack](https://craftcms.com/community) with questions. [@bgrrtt](https://craftcms.slack.com/team/bgrrtt).
+
+My focus, for now, is shipping [v1.0](https://github.com/bgrrtt/craftOps/milestone/1) as soon as possible.
+
+Thanks to [@pixelandtonic](https://github.com/pixelandtonic), [@khalwat](https://github.com/khalwat), and [@geerlingguy](https://github.com/geerlingguy) for their work and influence.
+
+Thanks to friends and family for wondering where I've been.
