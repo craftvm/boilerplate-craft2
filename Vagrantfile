@@ -1,7 +1,7 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-PROJECT_NAME = "project"
+DOMAIN_NAME = "project"
 LOCAL_IP = "192.168.20.10"
 
 Vagrant.configure("2") do |config|
@@ -10,7 +10,7 @@ Vagrant.configure("2") do |config|
 
   # Virtualbox Configuartion
   config.vm.provider :virtualbox do |v|
-    v.name = PROJECT_NAME + ".vm"
+    v.name = DOMAIN_NAME + ".vm"
     v.memory = 1024
     v.cpus = 2
     v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
@@ -18,7 +18,7 @@ Vagrant.configure("2") do |config|
   end
 
   # Set hostname and IP
-  config.vm.hostname = PROJECT_NAME + ".dev"
+  config.vm.hostname = DOMAIN_NAME + ".dev"
   config.vm.network :private_network, ip: LOCAL_IP
 
   # Sync local folders for dev
@@ -26,7 +26,7 @@ Vagrant.configure("2") do |config|
   config.vm.synced_folder ".", "/site"
 
   # Set name of the VM
-  config.vm.define PROJECT_NAME do |something|
+  config.vm.define DOMAIN_NAME do |yothing|
   end
 
   # Provison with Ansible
