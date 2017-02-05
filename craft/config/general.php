@@ -23,7 +23,7 @@ return array(
         'pageTrigger' => 'page/',
         'generateTransformsBeforePageLoad' => true,
         'siteUrl'  => getenv('CRAFTENV_SITE_URL'),
-        'env'  => CRAFT_ENVIRONMENT,
+        'env'  => CRAFTENV_ENVIRONMENT,
 
         // Set the environmental variables
         'environmentVariables' => array(
