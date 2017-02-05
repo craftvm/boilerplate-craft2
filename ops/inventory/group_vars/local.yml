@@ -2,18 +2,17 @@
 user: vagrant
 group: vagrant
 
-client_code: prjct
-domain_name: project
-
-CRAFTENV_CRAFT_ENVIRONMENT: local
+# CraftOps Variables
+CRAFTENV_ENVIRONMENT: local
 CRAFTENV_DB_HOST: localhost
-CRAFTENV_DB_NAME: "{{ client_code }}"
+CRAFTENV_DB_NAME: "{{ ansible_hostname }}"
 CRAFTENV_DB_USER: root
 CRAFTENV_DB_PASS: root
-CRAFTENV_SITE_URL: "//{{ domain_name }}.dev"
-CRAFTENV_BASE_URL: "//{{ domain_name }}.dev"
+CRAFTENV_SITE_URL: "//{{ ansible_fqdn }}"
+CRAFTENV_BASE_URL: "//{{ ansible_fqdn }}"
 CRAFTENV_BASE_PATH: "/assets/"
 
+# Mysql Settings
 mysql_root_password: "{{ CRAFTENV_DB_PASS }}"
 mysql_databases:
   - name: "{{ CRAFTENV_DB_NAME }}"
@@ -21,9 +20,10 @@ mysql_databases:
     encoding: utf8
     replicate: 1
 
+# Nginx Settings
 nginx_vhosts:
   - listen: "80"
-    server_name: "_"
+    server_name: "{{ ansible_fqdn }}"
     root: /site/public
     index: "index.php index.html index.htm"
     access_log: "/var/log/nginx/{{ user }}_access.log"
@@ -51,7 +51,7 @@ nginx_vhosts:
           fastcgi_intercept_errors on;
           fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
           fastcgi_param SCRIPT_NAME $fastcgi_script_name;
-          fastcgi_param CRAFTENV_CRAFT_ENVIRONMENT "{{ CRAFTENV_CRAFT_ENVIRONMENT }}";
+          fastcgi_param CRAFTENV_ENVIRONMENT "{{ CRAFTENV_ENVIRONMENT }}";
           fastcgi_param CRAFTENV_DB_HOST "{{ CRAFTENV_DB_HOST }}";
           fastcgi_param CRAFTENV_DB_NAME "{{ CRAFTENV_DB_NAME }}";
           fastcgi_param CRAFTENV_DB_USER "{{ CRAFTENV_DB_USER }}";
