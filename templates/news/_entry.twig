@@ -10,15 +10,7 @@
  # variable, set to the requested News entry.
  #
  # See this page for more details on how Craft routes requests:
- # http://craftcms.com/docs/routing
+ # http://buildwithcraft.com/docs/routing
  #}
 
-{% extends "_layout" %}
-
-{% block content %}
-	<article>
-		<h1>{{ entry.title }}</h1>
-		<p>Posted on {{ entry.postDate.format('F d, Y') }}</p>
-		{{ entry.body }}
-	</article>
-{% endblock %}
+{% extends "_channel/_entry" %}

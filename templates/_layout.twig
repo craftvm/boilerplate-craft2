@@ -10,37 +10,87 @@
  #}
 
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US">
+<html class="no-js">
 <head>
-	<meta charset="utf-8" />
-	<title>{% if title is defined %}{{ title }} - {% endif %}{{ siteName }}</title>
-	<link rel="home" href="{{ siteUrl }}" />
-  <link rel="stylesheet" href="{{ siteUrl }}assets/css/master.min.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{% if title is defined %}{{ title }} - {% endif %}{{ siteName }}</title>
+  <link rel="home" href="{{ siteUrl }}" />
+
+  <link rel="icon" href="{{ siteUrl }}favicon.ico">
+
+  {# Let's use uncompressed CSS if we're in dev mode, for easier debugging: #}
+  {% if craft.config.devMode %}
+  <link rel="stylesheet" href="{{ siteUrl }}assets/css/master.min.css" />
+  {% else %}
+  <link rel="stylesheet" href="{{ siteUrl }}assets/css/master.min.css" />
+  {% endif %}
+
+  {% block headScripts %}
+  {# <script src="{{ siteUrl }}assets/js/modernizr.js"></script> #}
+  {% endblock %}
 </head>
 
 <body>
-	<div id="container">
-		<header id="header">
-			<h1><a href="{{ siteUrl }}">{{ siteName }}</a></h1>
+  <nav role="navigation" class="topnav">
+    <div class="container">
+      <h1><a href="{{ siteUrl }}">{{ siteName }}</a></h1>
+      {# Here are the items that are used to populate the navigation: #}
+      {%- set navItems = {
+        'news':   'News',
+        'about':  'About',
+        'contact':  'Contact Us'
+      } -%}
+      <ul>
+        {% for sectionUrl, sectionName in navItems -%}
+        <li><a href="{{ url(sectionUrl) }}"{% if craft.request.firstSegment == sectionUrl %} class="active"{% endif %}>{{ sectionName }}</a></li>
+        {% endfor %}
+        <li><a href="{{ url('patterns') }}"{% if craft.request.firstSegment == 'patterns' %} class="active"{% endif %}>Patterns</a></li>
+      </ul>
+    </div>
+  </nav>
 
-			<nav>
-				<ul>
-					<li><a href="{{ url('news') }}" {% if craft.request.firstSegment == 'news' %}class="active"{% endif %}>News</a></li>
-				</ul>
-			</nav>
-		</header>
+  {% block search %}
+  <div class="container">
+    {% include '_partials/search' %}
+  </div>
 
-		<main id="content" role="main">
-			{% block content %}
-				<p>If you see me, you haven’t set your <code>{% verbatim %}{% block content %}…{% endblock %}{% endverbatim %}</code> yet.</p>
-				<p>See Twig’s <a href="http://twig.sensiolabs.org/doc/templates.html#template-inheritance">Template Inheritance</a> documentation for an explanation.</p>
-			{% endblock %}
-		</main>
+  <hr />
+  {% endblock %}
 
-		<footer id="footer">
-			Copyright {{ now.year }} {{ craft.request.serverName | ucfirst }}. All rights reserved  •  Built with <a href="http://craftcms.com">Craft</a>
-		</footer>
-	</div>
-  <script type="text/javascript" src="{{ siteUrl }}assets/js/master.min.js"></script>
+  <main role="main" class="container">
+  {% block content %}
+    <p>If you see me, you haven’t set your <code>{% verbatim %}{% block content %}…{% endblock %}{% endverbatim %}</code> yet.</p>
+    <p>See Twig’s <a href="http://twig.sensiolabs.org/doc/templates.html#template-inheritance">Template Inheritance</a> documentation for an explanation.</p>
+  {% endblock %}
+  </main>
+
+  <footer>
+    <div class="hidden container">
+    Copyright {{ now.year }} {{ craft.request.serverName | ucfirst }}. All rights reserved  •  Built with <a href="http://buildwithcraft.com">Craft</a>
+    </div>
+  </footer>
+
+  {# {% block footerScripts %} #}
+    {# IE8 and below need jQuery 1 - other browsers use jQuery 3: -#}
+    {# (of course, if you don't need jQuery, just delete the next two lines...) -#}
+    {# <!--[if lt IE 9]><script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script><![endif]--> #}
+    {# <!--[if gte IE 9]><!--><script src="https://code.jquery.com/jquery-3.0.0.min.js" integrity="sha256-JmvOoLtYsmqlsWxa7mDSLMwa6dZ9rrIdtrrVYRnDRH0=" crossorigin="anonymous"></script><!-- <![endif]--> #}
+    {# <script src="/scripts/bundle.js"></script> #}
+  {# {% endblock %} #}
+
+  {# Don't include analytics snippet in live preview: #}
+  {% if not craft.request.isLivePreview %}
+  {# Analytics script goes here... #}
+  {% endif %}
+
+  {# If we're on a .dev domain, load Browsersync: #}
+  {# {% if craft.request.serverName|slice(-4) == '.dev' %}
+  <script id="__bs_script__">
+    //<![CDATA[
+      document.write("<script async src='http://localhost:3000/browser-sync/browser-sync-client.js'><\/script>");
+    //]]>
+  </script>
+  {% endif %} #}
 </body>
 </html>
