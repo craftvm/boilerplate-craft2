@@ -1,0 +1,31 @@
+.topnav {
+  border-bottom: solid 1px $border-color;
+  margin-bottom: $nav-spacing * 1;
+
+  a {
+    display: block;
+    height: $nav-spacing * 2.5;
+    line-height: $nav-spacing * 2.5;
+    text-decoration: none;
+  }
+  h1 {
+    @include span-columns(6);
+    }
+  }
+  nav {
+    @include span-columns(6);
+  }
+  ul {
+    float: right;
+    margin-right: -1em;
+  }
+  li {
+    display: inline-block;
+    text-transform: uppercase;
+
+    a {
+      padding-left: 1em;
+      padding-right: 1em;
+    }
+  }
+}

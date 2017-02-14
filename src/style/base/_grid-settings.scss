@@ -1,0 +1,20 @@
+// Neat ========================================================================
+
+$grid-columns: 12;
+$max-width: 1200px;
+
+// Breakpoints =================================================================
+
+$breakpoints: (
+  small:  320px,
+  med:    640px,
+  large:  920px,
+  wide:  1200px,
+  mega:  1400px
+);
+
+$mappy-queries: (
+  phone:   mappy-bp(med),
+  tablet:  mappy-bp(med large),
+  desktop: mappy-bp(large mega)
+);
