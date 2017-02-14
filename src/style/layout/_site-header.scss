@@ -10,7 +10,6 @@
   }
   h1 {
     @include span-columns(6);
-    }
   }
   nav {
     @include span-columns(6);
