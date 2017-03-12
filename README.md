@@ -7,23 +7,19 @@ Built with [Vagrant](https://www.vagrantup.com)  &  [Ansible](https://ansible.co
 
 Overview
 --------
-CraftOps is a self-contained, tooled, and local development environment, similar to Homestead, but also builds and maintains cloud infrastructure – specifically for Craft CMS.
+CraftOps is a self-contained, tooled, and local development environment, similar to Homestead, but by project and can build and maintain cloud infrastructure – specifically for Craft CMS.
 
 <!-- #### Idempotent Infrastructure
 - comming soon. -->
 
 #### Technology
-- Ubuntu 14.04
-- Git
-- Nginx 1.10
-- MySQL 5.6
+- Ubuntu 16.04.2
+- Nginx 1.10.3
+- MySQL 5.7.
 - PHP 7.0
-- Craft CMS's PHP Dependancies
 - ImageMagick
-- jpegoptim
-- optipng
 - ~~Composer~~(soon!)
-- A preconfigured Gulpfile.js & package.json
+- Configurable Gulpfile.js & package.json
 - ~~Zsh with ZIM~~(soon!)
 - ~~CraftOps Command~~(soon!)
 
