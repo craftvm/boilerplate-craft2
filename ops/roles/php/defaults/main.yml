@@ -27,7 +27,7 @@ php_executable: "php"
 
 # OpCache settings (useful for PHP >=5.5).
 php_opcache_zend_extension: "opcache.so"
-php_opcache_enable: "0"
+php_opcache_enable: "1"
 php_opcache_enable_cli: "0"
 php_opcache_memory_consumption: "96"
 php_opcache_interned_strings_buffer: "16"
@@ -54,14 +54,18 @@ php_max_execution_time: "60"
 php_max_input_time: "60"
 php_max_input_vars: "5000"
 php_realpath_cache_size: "32K"
+
+php_file_uploads: "On"
 php_upload_max_filesize: "64M"
+php_max_file_uploads: "50"
+
 php_post_max_size: "32M"
 php_date_timezone: "America/Detroit"
 php_allow_url_fopen: "On"
 
 php_sendmail_path: "/usr/sbin/sendmail -t -i"
 php_output_buffering: "4096"
-php_short_open_tag: false
+php_short_open_tag: "Off"
 php_disable_functions: []
 
 php_session_cookie_lifetime: 0
@@ -79,6 +83,7 @@ php_display_startup_errors: "Off"
 php_install_from_source: false
 php_source_version: "master"
 php_source_clone_dir: "~/php-src"
+php_source_clone_depth: 1
 php_source_install_path: "/opt/php"
 php_source_install_gmp_path: "/usr/include/x86_64-linux-gnu/gmp.h"
 # For faster compile time: "make --jobs=X" where X is # of cores present.
