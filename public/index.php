@@ -1,5 +1,8 @@
 <?php
 
+// Environment
+define('CRAFT_ENVIRONMENT', getenv('CRAFTENV_ENVIRONMENT'));
+
 // Custom craft/templates location
 define('CRAFT_TEMPLATES_PATH', '../templates/');
 

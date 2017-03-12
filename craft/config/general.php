@@ -10,46 +10,46 @@
 // $_ENV constants are loaded from .env.php via public/index.php
 return array(
 
-    // All environments
-    '*' => array(
-        'omitScriptNameInUrls' => true,
-        'preventUserEnumeration' => true,
-        'usePathInfo' => true,
-        'cacheDuration' => false,
-        'useEmailAsUsername' => true,
-        'autoLoginAfterAccountActivation' => true,
-        'enableCsrfProtection' => false,
-        'cpTrigger' => 'admin',
-        'pageTrigger' => 'page/',
-        'generateTransformsBeforePageLoad' => true,
-        'siteUrl'  => getenv('CRAFTENV_SITE_URL'),
-        'env'  => CRAFTENV_ENVIRONMENT,
+  // All environments
+  '*' => array(
+    'omitScriptNameInUrls' => true,
+    'preventUserEnumeration' => true,
+    'usePathInfo' => true,
+    'cacheDuration' => false,
+    'useEmailAsUsername' => true,
+    'autoLoginAfterAccountActivation' => true,
+    'enableCsrfProtection' => false,
+    'cpTrigger' => 'admin',
+    'pageTrigger' => 'page/',
+    'generateTransformsBeforePageLoad' => true,
+    'siteUrl'  => getenv('CRAFTENV_SITE_URL'),
+    'env'  => CRAFTENV_ENVIRONMENT,
 
-        // Set the environmental variables
-        'environmentVariables' => array(
-            'baseUrl'  => getenv('CRAFTENV_BASE_URL'),
-            'basePath' => getenv('CRAFTENV_BASE_PATH'),
-        ),
+    // Set the environmental variables
+    'environmentVariables' => array(
+        'baseUrl'  => getenv('CRAFTENV_BASE_URL'),
+        'basePath' => getenv('CRAFTENV_BASE_PATH'),
     ),
+  ),
 
-    // Live (production) environment
-    'live'  => array(
-        'devMode' => false,
-        'enableTemplateCaching' => true,
-        'allowAutoUpdates' => false,
-    ),
+  // Live (production) environment
+  'live'  => array(
+    'devMode' => false,
+    'enableTemplateCaching' => true,
+    'allowAutoUpdates' => false,
+  ),
 
-    // Staging (pre-production) environment
-    'staging'  => array(
-        'devMode' => false,
-        'enableTemplateCaching' => true,
-        'allowAutoUpdates' => false,
-    ),
+  // Staging (pre-production) environment
+  'staging'  => array(
+    'devMode' => false,
+    'enableTemplateCaching' => true,
+    'allowAutoUpdates' => false,
+  ),
 
-    // Local (development) environment
-    'local'  => array(
-        'devMode' => true,
-        'enableTemplateCaching' => false,
-        'allowAutoUpdates' => false,
-    ),
+  // Local (development) environment
+  'local'  => array(
+    'devMode' => true,
+    'enableTemplateCaching' => false,
+    'allowAutoUpdates' => false,
+  ),
 );
