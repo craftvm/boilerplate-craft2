@@ -5,7 +5,7 @@ DOMAIN_NAME = "project"
 LOCAL_IP = "192.168.20.10"
 
 Vagrant.configure("2") do |config|
-  config.vm.box = "ubuntu/trusty64"
+  config.vm.box = "bento/ubuntu-16.04"
   config.ssh.insert_key = false
 
   # Virtualbox Configuartion
