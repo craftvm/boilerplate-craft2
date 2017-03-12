@@ -12,6 +12,7 @@ pid-file = {{ mysql_pid_file }}
 {% if mysql_skip_name_resolve %}
 skip-name-resolve
 {% endif %}
+sql-mode="STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION"
 
 # Logging configuration.
 {% if mysql_log_error == 'syslog' or mysql_log == 'syslog' %}
