@@ -22,8 +22,8 @@ Vagrant.configure("2") do |config|
   config.vm.network :private_network, ip: LOCAL_IP
 
   # Sync local folders for dev
-  config.vm.synced_folder "./ops", "/ops"
-  config.vm.synced_folder ".", "/site"
+  config.vm.synced_folder "./ops", "/ops", type: "nfs"
+  config.vm.synced_folder ".", "/site", type: "nfs"
 
   # Set name of the VM
   config.vm.define DOMAIN_NAME do |yothing|
