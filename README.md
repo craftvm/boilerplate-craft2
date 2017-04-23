@@ -4,6 +4,7 @@
 - [Vagrant 1.9](https://www.vagrantup.com) and [VirtualBox](https://www.virtualbox.org/wiki/Downloads)
 - [vagrant-hostsupdater](https://github.com/cogitatio/vagrant-hostsupdater)
 - [vagrant-vbguest](https://github.com/dotless-de/vagrant-vbguest)
+- [vagrant-bindfs](https://github.com/gael-ian/vagrant-bindfs)
 
 ## Step 1.
 Start and enter a new directory for this project with:
