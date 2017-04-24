@@ -4,7 +4,6 @@ base_pkgs:
   - git
   - build-essential
   - jpegoptim
-  - nginx
   - ntp
   - optipng
   - python-apt
@@ -14,7 +13,6 @@ base_pkgs:
   - tree
   - unattended-upgrades
   - whois
-  - zsh
 
 pip_pkgs:
   - boto
@@ -23,7 +21,6 @@ pip_pkgs:
   # - cryptography
 
 apt_ppas:
-  - "ppa:nginx/stable"
   - "ppa:ondrej/php"
 
 remove_pkgs:
