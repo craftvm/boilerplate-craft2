@@ -15,25 +15,27 @@ gulp.task('build-css', function() {
     .pipe(autoprefixer({
       browsers: ['last 25 versions']
     }))
+    .pipe(gulp.dest('../public/css'))
     .pipe(minify())
     .pipe(rename({suffix: '.min'}))
     .pipe(sourcemaps.write('.'))
-    .pipe(gulp.dest('../public/assets/css'))
+    .pipe(gulp.dest('../public/css'))
     .pipe(browserSync.stream());
 });
 
 gulp.task('build-js', function() {
   gulp.src('./scripts/*.js')
     .pipe(concat('master.js'))
+    .pipe(gulp.dest('../public/js'))
     .pipe(rename({suffix: '.min'}))
     .pipe(uglify())
-    .pipe(gulp.dest('../public/assets/js'))
+    .pipe(gulp.dest('../public/js'))
     .pipe(browserSync.stream());
 });
 
 gulp.task('serve', function() {
   browserSync.init({
-    proxy: 'project.dev'
+    proxy: 'craft.dev'
   });
 })
 
@@ -43,5 +45,5 @@ gulp.task('watch', function(){
   gulp.watch('../templates/**/*.twig').on('change', browserSync.reload);
 })
 
-gulp.task('default', ['build-css', 'serve', 'watch']);
+gulp.task('default', ['build-css', 'build-js', 'serve', 'watch']);
 gulp.task('build', ['build-css', 'build-js']);

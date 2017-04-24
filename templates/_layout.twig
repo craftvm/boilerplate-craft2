@@ -15,16 +15,11 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>{% if title is defined %}{{ title }} - {% endif %}{{ siteName }}</title>
-  <link rel="home" href="{{ siteUrl }}" />
 
+  <link rel="home" href="{{ siteUrl }}" />
   <link rel="icon" href="{{ siteUrl }}favicon.ico">
 
-  {# Let's use uncompressed CSS if we're in dev mode, for easier debugging: #}
-  {% if craft.config.devMode %}
-  <link rel="stylesheet" href="{{ siteUrl }}assets/css/master.min.css" />
-  {% else %}
-  <link rel="stylesheet" href="{{ siteUrl }}assets/css/master.min.css" />
-  {% endif %}
+  <link rel="stylesheet" href="{{ siteUrl }}css/master.min.css" />
 
   {% block headScripts %}
   {# <script src="{{ siteUrl }}assets/js/modernizr.js"></script> #}
