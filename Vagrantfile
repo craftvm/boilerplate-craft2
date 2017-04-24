@@ -1,42 +1,56 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-DOMAIN_NAME = "project"
-LOCAL_IP = "192.168.20.10"
+require 'yaml'
+vmconfig = YAML.load_file("./configuration.yml")
 
 Vagrant.configure("2") do |config|
-  config.vm.box = "bento/ubuntu-16.04"
-  config.ssh.insert_key = false
+
+  # Box Image
+  config.vm.box = "bento/ubuntu-14.04"
+
+  # Define VM
+  config.vm.define vmconfig['DOMAIN_NAME'] + ".dev"
 
   # Virtualbox Configuartion
   config.vm.provider :virtualbox do |v|
-    v.name = DOMAIN_NAME + ".vm"
-    v.memory = 1024
+    v.name = vmconfig['DOMAIN_NAME'] + ".vm"
+    v.memory = 2048
     v.cpus = 2
     v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+    v.customize ["modifyvm", :id, "--nictype1", "virtio" ]
+    v.customize ["modifyvm", :id, "--nictype2", "virtio" ]
     v.customize ["modifyvm", :id, "--ioapic", "on"]
+    v.customize ["storagectl", :id, "--name", "SATA Controller", "--hostiocache", "on"]
   end
 
-  # Set hostname and IP
-  config.vm.hostname = DOMAIN_NAME + ".dev"
-  config.vm.network :private_network, ip: LOCAL_IP
+  # SSH Configuartion
+  config.ssh.insert_key = false
 
-  # Sync local folders for dev
-  config.vm.synced_folder "./ops", "/ops", type: "nfs"
-  config.vm.synced_folder ".", "/site", type: "nfs"
+  # Set Hostname and IP
+  config.vm.hostname = vmconfig['DOMAIN_NAME'] + ".dev"
+  config.vm.network :private_network, ip: vmconfig['LOCAL_IP']
 
-  # Set name of the VM
-  config.vm.define DOMAIN_NAME do |yothing|
-  end
+  # Sync folders
+  config.vm.synced_folder ".", "/nfs", type: "nfs", mount_options: ['rw', 'vers=3', 'tcp', 'fsc' ,'actimeo=2']
+  config.bindfs.bind_folder "/nfs", "/site"
+  config.bindfs.bind_folder "/nfs/ops", "/ops"
 
   # Provison with Ansible
   config.vm.provision "ansible_local" do |ansible|
-    ansible.playbook = "vagrant.yml"
     ansible.provisioning_path = "/ops"
-    ansible.inventory_path = "/ops/inventory/hosts"
+    ansible.playbook = "plays/vagrant.yml"
+    ansible.inventory_path = "hosts"
     ansible.limit = "all"
-    ansible.verbose = true
     ansible.version = "latest"
+    ansible.verbose = false
+  end
+
+  # Cache packages and dependencies if vagrant-cachier plugin is present.
+  if Vagrant.has_plugin?('vagrant-cachier')
+    config.cache.scope = :box
+    config.cache.auto_detect = false
+    config.cache.enable :apt
   end
 
 end
