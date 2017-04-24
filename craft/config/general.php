@@ -22,13 +22,13 @@ return array(
     'cpTrigger' => 'admin',
     'pageTrigger' => 'page/',
     'generateTransformsBeforePageLoad' => true,
-    'siteUrl'  => getenv('CRAFTENV_SITE_URL'),
-    'env'  => CRAFTENV_ENVIRONMENT,
+    'siteUrl'  => getenv('CRAFTVM_SITE_URL'),
+    'env'  => getenv('CRAFTVM_ENVIRONMENT'),
 
     // Set the environmental variables
     'environmentVariables' => array(
-        'baseUrl'  => getenv('CRAFTENV_BASE_URL'),
-        'basePath' => getenv('CRAFTENV_BASE_PATH'),
+        'baseUrl'  => getenv('CRAFTVM_BASE_URL'),
+        'basePath' => getenv('CRAFTVM_BASE_PATH'),
     ),
   ),
 

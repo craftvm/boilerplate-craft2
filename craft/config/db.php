@@ -12,10 +12,10 @@ return array(
 
     // All environments
     '*' => array(
-        'server' => getenv('CRAFTENV_DB_HOST'),
-        'database' => getenv('CRAFTENV_DB_NAME'),
-        'user' => getenv('CRAFTENV_DB_USER'),
-        'password' => getenv('CRAFTENV_DB_PASS'),
+        'server' => getenv('CRAFTVM_DB_HOST'),
+        'database' => getenv('CRAFTVM_DB_NAME'),
+        'user' => getenv('CRAFTVM_DB_USER'),
+        'password' => getenv('CRAFTVM_DB_PASS'),
         'tablePrefix' => 'craft',
     ),
 
