@@ -7,16 +7,16 @@ vmconfig = YAML.load_file("./configuration.yml")
 Vagrant.configure("2") do |config|
 
   # Box Image
-  config.vm.box = "bento/ubuntu-14.04"
+  config.vm.box =  vmconfig['vagrant_box']
 
   # Define VM
-  config.vm.define vmconfig['DOMAIN_NAME'] + ".dev"
+  config.vm.define vmconfig['craftvm_hostname'] + ".dev"
 
   # Virtualbox Configuartion
   config.vm.provider :virtualbox do |v|
-    v.name = vmconfig['DOMAIN_NAME'] + ".vm"
-    v.memory = 2048
-    v.cpus = 2
+    v.name = vmconfig['craftvm_hostname'] + ".vm"
+    v.memory = vmconfig['vagrant_memory']
+    v.cpus = vmconfig['vagrant_cpus']
     v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
     v.customize ["modifyvm", :id, "--nictype1", "virtio" ]
     v.customize ["modifyvm", :id, "--nictype2", "virtio" ]
@@ -28,8 +28,8 @@ Vagrant.configure("2") do |config|
   config.ssh.insert_key = false
 
   # Set Hostname and IP
-  config.vm.hostname = vmconfig['DOMAIN_NAME'] + ".dev"
-  config.vm.network :private_network, ip: vmconfig['LOCAL_IP']
+  config.vm.hostname = vmconfig['craftvm_hostname'] + ".dev"
+  config.vm.network :private_network, ip: vmconfig['craftvm_ip']
 
   # Sync folders
   config.vm.synced_folder ".", "/nfs", type: "nfs", mount_options: ['rw', 'vers=3', 'tcp', 'fsc' ,'actimeo=2']

@@ -1,67 +1,80 @@
 ---
-# user: vagrant
-# group: vagrant
+################################################################################
+# Craft CMS
+################################################################################
+
+craft_env: local
+craft_site_name: "{{ craftvm_name }}"
+craft_host_name: "{{ craftvm_url }}"
+craft_site_url: "//{{ craftvm_url }}"
+craft_base_url: "//{{ craftvm_url }}"
+craft_base_path: "/"
+craft_db_host: localhost
+craft_db_user: "{{ craftvm_user }}"
+craft_db_password: "{{ craftvm_user }}"
+craft_db_name: "{{ craftvm_hostname }}"
+
+################################################################################
+# Nginx
+################################################################################
+
+nginx_vhosts:
+  - listen: "80"
+    server_name: "{{ craft_host_name }}"
+    root: /site/public
+    index: "index.php index.html index.htm"
+    extra_parameters: |
+      # configuration from nginx-partials
+      # include /etc/nginx/nginx-partials/*.conf;
+      # root
+      location / {
+        try_files $uri $uri/ /index.php$is_args$args;
+      }
+      # craft
+      location ^~ /admin {
+        try_files $uri $uri/ /index.php$is_args$args;
+      }
+      location ^~ /cpresources {
+          try_files $uri $uri/ /index.php$is_args$args;
+      }
+      # php
+      location ~ \.php$ {
+          fastcgi_split_path_info ^(.+\.php)(/.+)$;
+          fastcgi_pass 127.0.0.1:9000;
+          fastcgi_index index.php;
+          fastcgi_intercept_errors on;
+          fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+          fastcgi_param SCRIPT_NAME $fastcgi_script_name;
+          fastcgi_param CRAFTVM_ENVIRONMENT "{{ craft_env }}";
+          fastcgi_param CRAFTVM_DB_HOST "{{ craft_db_host }}";
+          fastcgi_param CRAFTVM_DB_NAME "{{ craft_db_name }}";
+          fastcgi_param CRAFTVM_DB_USER "{{ craft_db_user }}";
+          fastcgi_param CRAFTVM_DB_PASS "{{ craft_db_password }}";
+          fastcgi_param CRAFTVM_SITE_URL "{{ craft_site_url }}";
+          fastcgi_param CRAFTVM_BASE_URL "{{ craft_base_url }}";
+          fastcgi_param CRAFTVM_BASE_PATH "{{ craft_base_path }}";
+          include fastcgi_params;
+      }
+      # no .htaccess
+      location ~ /\.ht {
+          deny all;
+      }
+
+################################################################################
+# MySQL
+################################################################################
+
+mysql_databases:
+  - name: "{{ craft_db_name }}"
+    encoding: utf8mb4
+    collation: utf8mb4_general_ci
+
+mysql_users:
+  - name: "{{ craft_db_user }}"
+    host: "%"
+    password: "{{ craft_db_password }}"
+    priv: "{{ craft_db_name }}.*:ALL"
+
+################################################################################
 #
-# # CraftOps Variables
-# CRAFTENV_ENVIRONMENT: local
-# CRAFTENV_DB_HOST: localhost
-# CRAFTENV_DB_NAME: "{{ ansible_hostname }}"
-# CRAFTENV_DB_USER: root
-# CRAFTENV_DB_PASS: root
-# CRAFTENV_SITE_URL: "//{{ ansible_fqdn }}"
-# CRAFTENV_BASE_URL: "//{{ ansible_fqdn }}"
-# CRAFTENV_BASE_PATH: "/assets/"
-#
-# # Mysql Settings
-# mysql_root_password: "{{ CRAFTENV_DB_PASS }}"
-# mysql_databases:
-#   - name: "{{ CRAFTENV_DB_NAME }}"
-#     collation: utf8_general_ci
-#     encoding: utf8
-#     replicate: 1
-#
-# # Nginx Settings
-# nginx_vhosts:
-#   - listen: "80"
-#     server_name: "{{ ansible_fqdn }}"
-#     root: /site/public
-#     index: "index.php index.html index.htm"
-#     access_log: "/var/log/nginx/{{ user }}_access.log"
-#     error_log: "/var/log/nginx/{{ user }}_error.log"
-#     error_page: "404 =200 404"
-#     extra_parameters: |
-#       # configuration from nginx-partials
-#       include /etc/nginx/nginx-partials/*.conf;
-#       # root
-#       location / {
-#         try_files $uri $uri/ /index.php$is_args$args;
-#       }
-#       # craft
-#       location ^~ /admin {
-#         try_files $uri $uri/ /index.php$is_args$args;
-#       }
-#       location ^~ /cpresources {
-#           try_files $uri $uri/ /index.php$is_args$args;
-#       }
-#       # php
-#       location ~ \.php$ {
-#           fastcgi_split_path_info ^(.+\.php)(/.+)$;
-#           fastcgi_pass 127.0.0.1:9000;
-#           fastcgi_index index.php;
-#           fastcgi_intercept_errors on;
-#           fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-#           fastcgi_param SCRIPT_NAME $fastcgi_script_name;
-#           fastcgi_param CRAFTENV_ENVIRONMENT "{{ CRAFTENV_ENVIRONMENT }}";
-#           fastcgi_param CRAFTENV_DB_HOST "{{ CRAFTENV_DB_HOST }}";
-#           fastcgi_param CRAFTENV_DB_NAME "{{ CRAFTENV_DB_NAME }}";
-#           fastcgi_param CRAFTENV_DB_USER "{{ CRAFTENV_DB_USER }}";
-#           fastcgi_param CRAFTENV_DB_PASS "{{ CRAFTENV_DB_PASS }}";
-#           fastcgi_param CRAFTENV_SITE_URL "{{ CRAFTENV_SITE_URL }}";
-#           fastcgi_param CRAFTENV_BASE_URL "{{ CRAFTENV_BASE_URL }}";
-#           fastcgi_param CRAFTENV_BASE_PATH "{{ CRAFTENV_BASE_PATH }}";
-#           include fastcgi_params;
-#       }
-#       # no .htaccess
-#       location ~ /\.ht {
-#           deny all;
-#       }
+################################################################################

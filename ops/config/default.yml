@@ -1,0 +1,94 @@
+---
+# Webserver
+################################################################################
+nginx_remove_default_vhost: true
+nginx_ppa_use: true
+
+# Database
+################################################################################
+mysql_root_password: root
+mysql_slow_query_log_enabled: true
+mysql_slow_query_time: 2
+mysql_wait_timeout: 300
+
+# php
+################################################################################
+php_version: "7.1"
+php_install_recommends: yes
+php_memory_limit: "192M"
+php_display_errors: "On"
+php_display_startup_errors: "On"
+php_realpath_cache_size: "1024K"
+php_opcache_enabled_in_ini: true
+php_opcache_memory_consumption: "192"
+php_opcache_max_accelerated_files: 4096
+php_max_input_vars: "4000"
+php_date_timezone: "America/Detroit"
+
+# phpConfs
+php_conf_paths:
+  - "/etc/php/{{ php_version }}/fpm"
+  - "/etc/php/{{ php_version }}/nginx"
+  - "/etc/php/{{ php_version }}/cli"
+php_extension_conf_paths:
+  - "/etc/php/{{ php_version }}/fpm/conf.d"
+  - "/etc/php/{{ php_version }}/nginx/conf.d"
+  - "/etc/php/{{ php_version }}/cli/conf.d"
+
+# php-fpm
+php_webserver_daemon: "{{ craftvm_webserver }}"
+php_enable_php_fpm: true
+php_fpm_daemon: "php{{ php_version }}-fpm"
+php_fpm_conf_path: "/etc/php/{{ php_version }}/fpm"
+php_fpm_pool_conf_path: "{{ php_fpm_conf_path }}/pool.d/www.conf"
+php_fpm_listen: "127.0.0.1:9000"
+php_fpm_pool_user: "{{ craftvm_user }}"
+php_fpm_pool_group: "{{ craftvm_user }}"
+
+# phpPackages
+php_mysql_package: "php{{ php_version }}-mysql"
+php_packages:
+  - "php{{ php_version }}"
+  - "php-apcu"
+  - "php{{ php_version }}-cli"
+  - "php{{ php_version }}-cgi"
+  - "php{{ php_version }}-common"
+  - "php{{ php_version }}-curl"
+  - "php{{ php_version }}-dev"
+  - "php{{ php_version }}-fpm"
+  - "php{{ php_version }}-gd"
+  - php-imagick
+  - "php{{ php_version }}-imap"
+  - "php{{ php_version }}-intl"
+  - "php{{ php_version }}-json"
+  - "php{{ php_version }}-mbstring"
+  - "php{{ php_version }}-mcrypt"
+  - "php{{ php_version }}-odbc"
+  - "php{{ php_version }}-opcache"
+  - php-pear
+  - "php{{ php_version }}-sqlite3"
+  - "php{{ php_version }}-tidy"
+  - "php{{ php_version }}-xml"
+  - "php{{ php_version }}-xmlrpc"
+  - "php{{ php_version }}-zip"
+  - libpcre3-dev
+
+# Firewall
+################################################################################
+firewall_allowed_tcp_ports:
+  - "22"
+  - "80"
+  - "443"
+firewall_log_dropped_packets: false
+firewall_disable_firewalld: true
+firewall_disable_ufw: true
+
+# Ansible Galaxy Roles
+################################################################################
+ansible_galaxy_roles:
+  - bgrrtt.zim
+  - geerlingguy.firewall
+  - geerlingguy.nginx
+  - geerlingguy.php
+  - geerlingguy.mysql
+  - geerlingguy.php-mysql
