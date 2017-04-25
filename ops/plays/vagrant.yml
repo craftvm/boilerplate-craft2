@@ -17,3 +17,5 @@
         state:  present
       with_items:
         - "{{ ansible_galaxy_roles }}"
+  roles:
+    - { role: bgrrtt.zim, when: ansible_domain == 'dev' }
