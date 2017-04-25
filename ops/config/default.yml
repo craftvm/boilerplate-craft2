@@ -86,7 +86,6 @@ firewall_disable_ufw: true
 # Ansible Galaxy Roles
 ################################################################################
 ansible_galaxy_roles:
-  - bgrrtt.zim
   - geerlingguy.firewall
   - geerlingguy.nginx
   - geerlingguy.php

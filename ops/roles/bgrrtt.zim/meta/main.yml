@@ -1,0 +1,15 @@
+galaxy_info:
+  author: Branden Garrett
+  description: Install ZIM!
+  company: Mizzen
+  license: MIT
+  min_ansible_version: 2.2.2
+  platforms:
+    - name: Ubuntu
+      versions:
+      - trusty
+      - xenial
+  galaxy_tags:
+    - dotfiles
+    - zsh
+dependencies: []

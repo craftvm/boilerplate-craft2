@@ -17,5 +17,3 @@
         state:  present
       with_items:
         - "{{ ansible_galaxy_roles }}"
-  roles:
-    - bgrrtt.zim

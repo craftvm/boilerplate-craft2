@@ -6,6 +6,7 @@
     - /ops/config/default.yml
   roles:
     - pkgs
+    - { role: bgrrtt.zim, when: ansible_domain == 'dev' }
     - { role: geerlingguy.firewall }
     - { role: geerlingguy.nginx, tags: ['webserver'] }
     - { role: geerlingguy.php, tags: ['php'] }

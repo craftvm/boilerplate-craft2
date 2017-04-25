@@ -3,7 +3,6 @@
 craft/app
 src/node_modules
 *.pyc
-/ops/roles/bgrrtt.zim
 /ops/roles/geerlingguy.firewall
 /ops/roles/geerlingguy.nginx
 /ops/roles/geerlingguy.php

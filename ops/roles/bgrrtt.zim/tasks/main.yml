@@ -1,0 +1,37 @@
+---
+# tasks file for zim
+- name: install dependencies
+  apt: pkg={{ item }} state=present
+  with_items:
+    - zsh
+    - git
+
+- name: install zim
+  git: repo=https://github.com/bgrrtt/dotfiles.git dest=~/.zim
+  become: false
+
+- name: get rid of existing ~/.zshrc
+  file: path=~/.zshrc state=absent
+  become: false
+
+- name: set .zshrc
+  template:
+    src: zshrc.j2
+    dest: ~/.zshrc
+  become: false
+
+- name: set .zlogin
+  template:
+    src: zlogin.j2
+    dest: ~/.zlogin
+  become: false
+
+- name: set .zimrc
+  template:
+    src: zimrc.j2
+    dest: ~/.zimrc
+  become: false
+
+- name: switch to zsh
+  user: name=vagrant shell=/usr/bin/zsh
+  become: true
