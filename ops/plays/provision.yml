@@ -3,9 +3,7 @@
   become: yes
   vars_files:
     - /site/configuration.yml
-  tasks:
-    - debug:
-        msg: "{{ DOMAIN_NAME }}"
+    - /ops/config/default.yml
   roles:
     - pkgs
     - { role: geerlingguy.firewall }
@@ -15,4 +13,3 @@
   #   - { role: geerlingguy.composer }
     - { role: geerlingguy.mysql, tags: ['database'] }
     - { role: geerlingguy.php-mysql, tags: ['php', 'database'] }
-    - { role: geerlingguy.adminer }

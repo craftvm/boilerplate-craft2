@@ -3,11 +3,12 @@
   become: yes
   vars_files:
     - /site/configuration.yml
+    - /ops/config/default.yml
   pre_tasks:
     - name: Install roles from Ansible Galaxy
       command: ansible-galaxy install {{ item }} --roles-path /ops/roles
       with_items:
-        - "{{ ansible_roles_list }}"
+        - "{{ ansible_galaxy_roles }}"
     - name: add roles to .gitignore
       lineinfile:
         dest:   '/site/.gitignore'
@@ -15,6 +16,6 @@
         line:   '/ops/roles/{{ item }}'
         state:  present
       with_items:
-        - "{{ ansible_roles_list }}"
+        - "{{ ansible_galaxy_roles }}"
   roles:
     - bgrrtt.zim
