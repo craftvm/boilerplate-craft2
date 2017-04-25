@@ -7,10 +7,8 @@
  * You can see a list of the default settings in craft/app/etc/config/defaults/general.php
  */
 
-// $_ENV constants are loaded from .env.php via public/index.php
 return array(
 
-  // All environments
   '*' => array(
     'omitScriptNameInUrls' => true,
     'preventUserEnumeration' => true,
@@ -21,25 +19,23 @@ return array(
     'enableCsrfProtection' => false,
     'cpTrigger' => 'admin',
     'pageTrigger' => 'page/',
-    'generateTransformsBeforePageLoad' => true,
-    'siteUrl'  => getenv('CRAFTVM_SITE_URL'),
-    'env'  => getenv('CRAFTVM_ENVIRONMENT'),
-
-    // Set the environmental variables
+    'siteUrl' => getenv('CRAFTVM_SITE_URL'),
+    'env' => getenv('CRAFTVM_ENVIRONMENT'),
+    //
     'environmentVariables' => array(
-        'baseUrl'  => getenv('CRAFTVM_BASE_URL'),
+        'baseUrl' => getenv('CRAFTVM_BASE_URL'),
         'basePath' => getenv('CRAFTVM_BASE_PATH'),
     ),
   ),
 
-  // Live (production) environment
+  // Production environment
   'live'  => array(
     'devMode' => false,
     'enableTemplateCaching' => true,
     'allowAutoUpdates' => false,
   ),
 
-  // Staging (pre-production) environment
+  // Staging environment
   'staging'  => array(
     'devMode' => false,
     'enableTemplateCaching' => true,
